@@ -1,364 +1,350 @@
 /* 
   :root
   HVA: Definerer globale CSS-variabler (custom properties) tilgjengelig i hele dokumentet.
-  HVORDAN: Variabler prefikses med -- og nås via var(--navn).
+  HVORDAN: Variabler prefikses med -- og brukes via var(--navn).
   HVORFOR: Forenkler gjenbruk, theming og vedlikehold.
 */
 :root{
     /* 
-      Globale CSS-variabler for enkel gjenbruk av farger.
+      Globale fargevariabler for enkel gjenbruk.
       HVORFOR: Gir konsistent fargepalett og enklere vedlikehold.
     */
-    --basic-grey: #efefefef;   /* HVA: Lys grå, brukes til bakgrunn og subtile elementer. HVORDAN: var(--basic-grey). */
-    --basic-red: #6a0404;      /* HVA: Mørk rød, til aksenter/feil/primær CTA. HVORFOR: Sterk kontrast og tydelig signal. */
-}
-
-/* 
-  * (universalselektor)
-  HVA: Setter box-modell for alle elementer.
-  HVORDAN: border-box gjør at padding/border inkluderes i total bredde/høyde.
-  HVORFOR: Forutsigbar layout uten “sprukne” bokser ved padding.
-*/
-*{
-    box-sizing: border-box;
-}
-
-
-/* 
-  body
-  HVA: Global typografi og nullstilling av margin.
-  HVORDAN: Sans-serif-stack for bred støtte; margin:0 fjerner user-agent-margin.
-  HVORFOR: Ensartet uttrykk og full kontroll over layout fra kanten av viewport.
-*/
-body{
+    --basic-grey: #efefefef;  /* HVA: Lys grå med alfa, for bakgrunn/sekundære flater. HVORDAN: var(--basic-grey) */
+    --basic-red:  #6a0404;    /* HVA: Mørk rød til aksenter/feil/CTA. HVORFOR: Tydelig kontrast/signal. */
+  }
+  
+  /* 
+    * (universalselektor)
+    HVA: Setter box-modell for alle elementer.
+    HVORDAN: border-box inkluderer padding/border i total bredde/høyde.
+    HVORFOR: Forutsigbar layout uten «sprukne» bokser ved padding.
+  */
+  *{ box-sizing: border-box; }
+  
+  /* 
+    body
+    HVA: Global typografi og nullstilling av margin.
+    HVORDAN: Sans-serif stack for bred støtte; margin:0 fjerner UA-margin.
+    HVORFOR: Ensartet uttrykk og full kontroll fra viewport-kanten.
+  */
+  body{
     font-family: Arial, Helvetica, sans-serif;
-    margin:0; /* HVA: Fjerner standard nettlesermargin for å få mer kontroll over layout */
-}
-
-
-/* 
-  #page-container
-  HVA: Sideramme som grid-beholder.
-  HVORDAN: Én kolonne på mobil, fem rader (header/hero/main/aside/footer).
-  HVORFOR: Semantisk og responsiv grunnstruktur som senere kan utvides i media queries.
-*/
-#page-container{
-    display:grid;
-    /*grid-template-areas: "header" 
-                        "hero" 
-                        "main" 
-                        "aside" 
-                        "footer";*/
-    grid-template-columns:1fr;                 /* HVA: Én fleksibel kolonne. */
-    grid-template-rows: auto auto auto auto auto; /* HVA: Radhøyde tilpasses innhold. */
-}
-
-
-/* ========== GLOBAL HEADER ========== */
-/*
-  #global-header
-  HVA: Toppmeny med logo og navigasjon.
-  HVORDAN: Flex for horisontal fordeling, spacing mellom logo og nav.
-  HVORFOR: Enkel, robust og utvidbar header som skalerer fra mobil til desktop.
-*/
-#global-header{
-    display: flex;                    /* HVA: Bruker flexbox for fleksibel layout */
-    justify-content: space-between;   /* HVA: Plasserer logo til venstre og navigasjon til høyre */
-    align-items: center;              /* HVA: Vertikal sentrering av innholdet */
-    padding: 1rem;                    /* HVA: Luft rundt headeren for bedre balanse */
-    /*grid-area: header;*/
-    grid-column-start: 1;             /* HVORDAN: Plasseres i første kolonne i gridet. */
-    grid-column-end: 2;               /* HVA: Strekker seg over én kolonne. */
-    grid-row-start:1;                 /* HVA: Første rad i gridet (øverst). */
-    grid-row-end: 2;                  /* HVA: Slutter før rad 2. */
-
-    /* 
-      Nestet nav-stil
-      HVA: Nullstill lister og legg dem horisontalt.
-      HVORDAN: Fjerner margin/padding og punkttegn; inline-block for horisontal meny.
-      HVORFOR: Ren, kompakt navigasjon uten default liste-styling.
-    */
-    nav{
-        ul{
-            padding:0;                /* HVA: Fjerner standard padding for renere design */
-            margin:0;                 /* HVA: Fjerner standard marger */
-
-            li{
-                list-style: none;     /* HVA: Skjuler standard punkter i navigasjonslisten */
-                display: inline-block;/* HVA: Viser menyvalg horisontalt i stedet for vertikalt */
-            }
-        }
-    }
-}
-
-
-/*
-  #mainlogo
-  HVA: Stil for hovedlogoen/merkenavnet som lenke.
-  HVORDAN: Stor, tung typografi; uten understrek; dempet farge.
-  HVORFOR: Tydelig visuell forankring uten å bli for hard i kontrasten.
-*/
-#mainlogo{
-    font-size: 30px;            /* HVA: Stor skrift for visuell hierarki. */
-    font-weight: 900;           /* HVA: Ekstra fet for å signalisere merke/primærsmerke. */
-    font-family: Arial, Helvetica, sans-serif; /* HVA: Sikrer samme font som globalt, og fallback. */
-    text-decoration: none;      /* HVA: Fjerner understrek siden dette fungerer som logo. */
-    color: #4d4a4a;             /* HVA: Dempet grå for mindre hard kontrast enn #000. */
-}
-
-
-/*
-  a (globale lenker)
-  HVA: Grunnstil for lenker.
-  HVORDAN: Nøytral farge, ingen understrek.
-  HVORFOR: Minimalistisk uttrykk; anbefal å supplere med :hover/:focus for tilgjengelighet.
-*/
-a{
-    color: #000;                /* HVA: Nøytral svart som standard lenkefarge. */
-    text-decoration: none;      /* HVA: Fjerner understrek for renere typografi. */
-}
-
-
-/* 
-  .deal-section (HERO)
-  HVA: Visuelt hero-område med bakgrunnsbilde.
-  HVORDAN: Cover for å fylle bredde/høyde; posisjonert mot bunnen; fallback-bakgrunn.
-  HVORFOR: Umiddelbar visuell kontekst; responsiv uten bildeforvrengning.
-*/
-.deal-section{
-    background-image: url("https://picsum.photos/800/500?grayscale"); /* HVA: Placeholder-bilde i gråskala. */
-    background-repeat: no-repeat;     /* HVA: Unngå gjentakelse av bildet. */
-    background-size: cover;           /* HVA: Dekk hele container uten å forvrenge ratio. */
-    background-position: bottom;      /* HVA: Forankrer motivet nede for fin visning. */
-    background-color:var(--basic-grey); /* HVA: Setter lys bakgrunn for å fremheve seksjonen */
-    padding: 1rem;                    /* HVA: Gir luft rundt innholdet */
-    position: relative;               /* HVA: Tillater absolutt posisjonering av barn hvis ønsket. */
-    height: 50vh;                     /* HVA: Dynamisk høyde (halv viewport). */
-    min-height: 200px;                /* HVA: Sikrer minimumshøyde på små skjermer. */
-
-    grid-column-start: 1;             /* HVA: Plassering i grid. */
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
- 
-    /*
-    img{
-        width: 100%;
-    }
-
-    h2, p, a{
-        position: absolute;
-    }
-
-    p{
-        top: 63px;
-    }
-
-    a{
-        top: 160px;
-    }
-    HVA/HVORDAN: Eksempel på absolutt posisjonering av overleggstekst/CTA.
-    HVORFOR: Gir kontroll over plassering, men bør kombineres med responsiv logikk.
-    */
-}
-
-
-/* ========== HOVEDINNHOLD ========== */
-/*
-  main
-  HVA: Primærsone for sideinnhold.
-  HVORDAN: Maksbredde for lesbarhet, sentrering med auto margins.
-  HVORFOR: Bedre linjelengde og fokus på innhold.
-*/
-main{
-    max-width: 1200px;          /* HVA: Begrens linjelengde og layoutbredde. */
-    width: 100%;                /* HVA: Fyller tilgjengelig plass opp til maks. */
-    margin: 1rem auto;          /* HVA: Sentrerer og gir vertikal luft. */
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 4;
-
-    section {
-        h2{
-            text-align: center; /* HVA: Sentrerer seksjonstitler. HVORFOR: Tydelig seksjonsdeling. */
-        }
-        article{
-            margin: 0 auto;     /* HVA: Sentrerer artikkel/kort når de har max-width. */
-        }
-    }
-}
-
-
-/*
-  article
-  HVA: Kort-lignende innholdsboks.
-  HVORDAN: Tynn kant, padding og breddebegrensninger; responsive bilder.
-  HVORFOR: Bedre lesbarhet, tydelig separasjon og ryddig kortgrid.
-*/
-article{
-    margin: 1rem 0;             /* HVA: Vertikal luft mellom artikler. */
-    border: 1px solid #efefef;  /* HVA: Lys kant for visuell avgrensing uten å dominere. */
-    max-width: 400px;           /* HVA: Hindrer for brede linjer – bedre lesbarhet. */
-    width: 100%;                /* HVA: Lar boksen fylle tilgjengelig plass i små visninger. */
-    min-width: 250px;           /* HVA: Sikrer at kortet ikke blir for smalt. */
-    padding: 1rem;              /* HVA: Innvendig luft for behagelig innholdsmarg. */
-
-    /*
-      img (nestet)
-      HVA: Gjør bilder responsive inne i article.
-      HVORDAN: Setter width:100% på img.
-      HVORFOR: Unngår overflow og inkonsistent skalering.
-      OBS: For ren CSS uten nesting, bruk `article img { width: 100%; }`.
-    */
-    img{
-        width: 100%;            /* HVA: Skalerer bilde til kortets bredde. */
-    }
-}
-
-
-/*
-  .btn
-  HVA: Primær knapp/lenke med tydelig CTA-stil.
-  HVORDAN: Kontrastfull bakgrunn, hvit tekst, god padding, ingen border.
-  HVORFOR: Synlig og lett-klikkbar handling; tilgjengelighet via kontrast.
-*/
-.btn{
-    display: inline-block;      /* HVA: Tillater padding/bredde, men flyter i tekst. */
-    background-color: #000;     /* HVA: Mørk bakgrunn gir klar kontrast mot hvit tekst. */
-    color: #fff;                /* HVA: Høy kontrast for tilgjengelighet/lesbarhet. */
-    padding: 1rem;              /* HVA: Stor klikkflate og balansert spacing */
-    border: none;               /* HVA: Fjerner standardkant for renere uttrykk */
-    /* Tips: vurder :hover/:focus { filter: brightness(1.1) } for tilbakemelding. */
-}
-
-
-/*
-  .side-container (ASIDE)
-  HVA: Sidekolonne for sekundærinformasjon/nyhetsbrev/filtre.
-  HVORDAN: Lys bakgrunn fra variabel; intern padding; plasseres i grid.
-  HVORFOR: Skiller innhold visuelt fra main og øker lesbarhet.
-*/
-.side-container{
+    margin: 0;
+  }
+  
+  /* 
+    #page-container
+    HVA: Sideramme som grid-beholder.
+    HVORDAN: Én kolonne på mobil; fem rader (header/hero/main/aside/footer).
+    HVORFOR: Semantisk og responsiv grunnstruktur som kan utvides i media queries.
+  */
+  #page-container{
+    display: grid;
+    /* grid-template-areas kan brukes for tydeligere oppsett senere */
+    grid-template-columns: 1fr;                      /* HVA: Én fleksibel kolonne */
+    grid-template-rows: auto auto auto auto auto;    /* HVA: Radhøyder følger innhold */
+  }
+  
+  /* ========== GLOBAL HEADER ========== */
+  /*
+    #global-header
+    HVA: Toppmeny med logo og navigasjon.
+    HVORDAN: Flex for horisontal fordeling; spacing mellom logo og nav.
+    HVORFOR: Enkel, robust og skalerbar header.
+  */
+  #global-header{
+    display: flex;                   
+    justify-content: space-between;  
+    align-items: center;             
+    padding: 1rem;                   
+    /* Grid-plassering i mobiloppsett */
+    grid-column: 1 / 2;              
+    grid-row: 1 / 2;                 
+  }
+  
+  /*
+    #global-header nav ul og li
+    HVA: Nullstiller lister og legger dem horisontalt.
+    HVORDAN: Fjerner margin/padding/punkter; viser elementene side ved side.
+    HVORFOR: Ren og kompakt navigasjon uten default liste-styling.
+  */
+  #global-header nav ul{
+    padding: 0;
+    margin: 0;
+  }
+  #global-header nav ul li{
+    list-style: none;
+    display: inline-block;
+  }
+  
+  /*
+    #mainlogo
+    HVA: Stil for hovedlogoen/merkenavnet som lenke.
+    HVORDAN: Stor, tung typografi; uten understrek; dempet farge.
+    HVORFOR: Tydelig visuell forankring uten for hard kontrast.
+  */
+  #mainlogo{
+    font-size: 30px;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color: #4d4a4a;
+  }
+  
+  /*
+    a (globale lenker)
+    HVA: Grunnstil for lenker.
+    HVORDAN: Nøytral farge, ingen understrek; legg til interaksjonstilstand.
+    HVORFOR: Minimalistisk uttrykk + bedre tilgjengelighet med focus/hover.
+  */
+  a{
+    color: #000;
+    text-decoration: none;
+  }
+  a:hover,
+  a:focus{
+    text-decoration: underline;  /* HVORFOR: Synlig tilbakemelding og bedre fokusindikator */
+    outline-offset: 2px;
+  }
+  
+  /* 
+    .deal-section (HERO)
+    HVA: Visuelt hero-område med bakgrunnsbilde.
+    HVORDAN: Cover for å fylle bredde/høyde; posisjonert mot bunnen; fallback-bakgrunn.
+    HVORFOR: Umiddelbar visuell kontekst; responsiv uten forvrengning.
+  */
+  .deal-section{
+    background-image: url("https://picsum.photos/800/500?grayscale"); /* HVA: Placeholder-bilde i gråskala */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
     background-color: var(--basic-grey);
     padding: 1rem;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 4;
-    grid-row-end: 5;
+    position: relative;
+    height: 50vh;            /* HVA: Dynamisk høyde (halv viewport) */
+    min-height: 200px;       /* HVA: Sikrer minstehøyde på små skjermer */
   
-    /*
-      form input
-      HVA: Blokkelementer med komfortabel klikkflate og spacing.
-      HVORFOR: Forutsigbart skjemaoppsett på små skjermer.
-    */
-    form{
-        input{
-            display: block;     /* HVA: Én per linje for tydelig inndata. */
-            padding: 1rem;      /* HVA: God treff-/leseflate. */
-            margin: 0.4rem 0;   /* HVA: Vertikal luft mellom felt. */
-        }
-    }
-}
-
-
-/*
-  .age-check
-  HVA: Radbasert justering av et checkbox/radiokontroll + label.
-  HVORDAN: Flex senter-justert med gap for luft.
-  HVORFOR: Ryddig og kompakt kontrollgruppe.
-*/
-.age-check{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  
+  /* ========== HOVEDINNHOLD ========== */
+  /*
+    main
+    HVA: Primærsone for sideinnhold.
+    HVORDAN: Maksbredde for lesbarhet, sentrering med auto margins.
+    HVORFOR: Bedre linjelengde og fokus på innhold.
+  */
+  main{
+    max-width: 1200px;
+    width: 100%;
+    margin: 1rem auto;
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+  
+  /*
+    main > section og underoverskrifter
+    HVA: Sentrerer seksjonstitler; artikler sentreres når de har max-width.
+    HVORFOR: Tydelig seksjonsdeling og ryddig layout.
+  */
+  main section h2{
+    text-align: center;
+  }
+  main section article{
+    margin: 0 auto;
+  }
+  
+  /*
+    article
+    HVA: Kort-lignende innholdsboks.
+    HVORDAN: Tynn kant, padding og breddebegrensninger; responsive bilder.
+    HVORFOR: Lesbarhet og tydelig separasjon.
+  */
+  article{
+    margin: 1rem 0;
+    border: 1px solid #efefef;
+    max-width: 400px;
+    width: 100%;
+    min-width: 250px;
+    padding: 1rem;
+  }
+  article img{
+    width: 100%;   /* HVA: Unngår overflow og inkonsistent skalering */
+    height: auto;
+  }
+  
+  /*
+    .btn
+    HVA: Primær knapp/lenke med tydelig CTA-stil.
+    HVORDAN: Kontrastfull bakgrunn, hvit tekst, god padding, ingen border.
+    HVORFOR: Synlig og lett-klikkbar handling; bedre kontrast.
+  */
+  .btn{
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    padding: 1rem;
+    border: none;
+  }
+  .btn:hover,
+  .btn:focus{
+    filter: brightness(1.1);   /* HVORFOR: Enkel tilbakemelding ved interaksjon */
+    outline: 2px solid currentColor; /* HVORFOR: Fokusindikator for tastaturnavigasjon */
+    outline-offset: 2px;
+  }
+  
+  /*
+    .side-container (ASIDE)
+    HVA: Sidekolonne for sekundærinfo/nyhetsbrev/filtre.
+    HVORDAN: Lys bakgrunn; intern padding; plasseres i grid.
+    HVORFOR: Skiller innhold visuelt fra main og øker lesbarhet.
+  */
+  .side-container{
+    background-color: var(--basic-grey);
+    padding: 1rem;
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+  }
+  .side-container form input{
+    display: block;   /* HVA: Én per linje for tydelig inndata */
+    padding: 1rem;    /* HVA: God treff-/leseflate */
+    margin: 0.4rem 0; /* HVA: Vertikal luft mellom felt */
+  }
+  
+  /*
+    .age-check
+    HVA: Radbasert justering av checkbox/radio + label.
+    HVORDAN: Flex senter-justert med gap for luft.
+    HVORFOR: Ryddig og kompakt kontrollgruppe.
+  */
+  .age-check{
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-
-/*
-  footer
-  HVA: Bunnseksjon med mørk bakgrunn og lys tekst.
-  HVORDAN: Plasseres i siste rad i grid; minimumshøyde og padding for balanse.
-  HVORFOR: Tydelig avslutning; plass til meta/lenker/kontaktinfo.
-*/
-footer{
-    background-color: #212324;  /* HVA: Mørk bakgrunn for kontrast mot hovedinnhold. */
-    color: #fff;                /* HVA: Hvit tekst for lesbarhet. */
-    padding: 1rem;              /* HVA: Komfortabel luft. */
-    min-height: 150px;          /* HVA: Visuell tyngde selv ved lite innhold. */
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 5;
-    grid-row-end: 6;
-}
-
-
-/* 
-  @media (min-width: 600px)
-  HVA: Layout for mellomstore+ skjermer.
-  HVORDAN: Går fra én kolonne til 3-spaltet grid (1fr/1fr/0.5fr) og reorganiserer områder.
-  HVORFOR: Utnytter bredere skjermer for bedre informasjonsarkitektur.
-*/
-@media only screen and (min-width: 600px){
-
+  }
+  
+  /*
+    footer
+    HVA: Bunnseksjon med mørk bakgrunn og lys tekst.
+    HVORDAN: Grid-plassering nederst; min-høyde og padding for balanse.
+    HVORFOR: Tydelig avslutning; plass til meta/lenker/kontaktinfo.
+  */
+  footer{
+    background-color: #212324;
+    color: #fff;
+    padding: 1rem;
+    min-height: 150px;
+    grid-column: 1 / 2;
+    grid-row: 5 / 6;
+  }
+  
+  /* 
+    @media (min-width: 600px)
+    HVA: Layout for mellomstore+ skjermer.
+    HVORDAN: Fra én kolonne til 3-spaltet grid (1fr/1fr/0.5fr) og reorganisering.
+    HVORFOR: Utnytter bredere skjermer for bedre IA.
+  */
+  @media only screen and (min-width: 600px){
+  
     /*
       #page-container (desktop-ish)
       HVA: 3 kolonner hvor tredje er smalere (aside).
-      HVORFOR: Klassisk innholds- + sidebar-oppsett.
+      HVORFOR: Klassisk innhold + sidebar.
     */
     #page-container{
-        grid-template-columns: 1fr 1fr 0.5fr;  /* HVA: To like brede + en smal kolonne. */
-        grid-template-rows: repeat(4, auto);   /* HVA: Fire rader som auto-høyde. */
-        /*grid-template-areas: "header header header"
-                            "hero hero hero"
-                            "main main aside"
-                            "footer footer footer";
-
-        grid-template-columns: 1fr 1fr 0.5fr;*/
+      grid-template-columns: 1fr 1fr 0.5fr;
+      grid-template-rows: repeat(4, auto);
+      /* grid-template-areas kan tas i bruk ved behov */
     }
-
+  
     /*
-      Header og hero strekker seg over alle tre kolonner
-      HVORFOR: Full bredde for toppseksjonene.
+      Header og hero strekker seg over alle tre kolonnene.
+      HVORFOR: Full bredde for toppseksjoner.
     */
     #global-header{
-        grid-column-end: 4;    /* HVA: Spenner kolonne 1-3 (slutter før 4). */
+      grid-column: 1 / 4; /* spenner 1-3 */
     }
-
+  
     .deal-section{
-        grid-column-end: 4;    /* HVA: Også full bredde på større skjermer. */
+      grid-column: 1 / 4; /* full bredde */
     }
-
+  
     /*
       main
-      HVA: Hovedinnholdet opptar de to første kolonnene.
-      HVORFOR: Gir plass til en dedikert sidebar i kolonne 3.
+      HVA: Opptar de to første kolonnene.
+      HVORFOR: Gir plass til sidebar i kolonne 3.
     */
     main{
-        grid-column-end: 3;    /* HVA: Strekker seg over kolonne 1-2. */
+      grid-column: 1 / 3;
     }
-
+  
     /*
       .side-container
       HVA: Flyttes til høyre kolonne.
-      HVORFOR: Klassisk layout med sidebar på desktop.
+      HVORFOR: Klassisk layout på desktop.
     */
     .side-container{
-        grid-column-start: 3;
-        grid-column-end: 4;
-        grid-row-start: 3;
-        grid-row-end: 4;
+      grid-column: 3 / 4;
+      grid-row: 3 / 4;
     }
-
+  
     /*
       footer
-      HVA: Footer går fullbredde nederst.
-      HVORFOR: Konsistent visuell avslutning uansett skjermstørrelse.
+      HVA: Går full bredde nederst.
+      HVORFOR: Konsistent avslutning uansett skjermstørrelse.
     */
     footer{
-        grid-column-end: 4;    /* HVA: Spenner over alle kolonner. */
-        grid-row-start: 4;     /* HVA: Ligger på siste rad i denne konfigurasjonen. */
-        grid-row-end: 5;
+      grid-column: 1 / 4;
+      grid-row: 4 / 5;
     }
-
-}
+  }
+  
+  /*
+    .flex-container
+    HVA: Fleksibel kort-layout som kan bryte til nye rader.
+    HVORDAN: Flex-wrap + gap; h2 tar full bredde; artikler vokser etter plass.
+    HVORFOR: Enkel, responsiv kort-grid uten kompliserte regler.
+  */
+  .flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .flex-container h2{
+    width: 100%;
+  }
+  .flex-container article{
+    min-width: 200px !important;  /* OBS: !important bør brukes sparsomt */
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  /*
+    section.flex-grow
+    HVA: Variant der kort kan vokse mer og radjusteringen starter til venstre.
+    HVORDAN: Justify-start; artikler får bredde-prosent for 3 i rad ved plass.
+    HVORFOR: Tettere kortgrid på bredere skjermer.
+  */
+  section.flex-grow{
+    justify-content: flex-start;
+  }
+  section.flex-grow article{
+    max-width: 900px;
+    min-width: 100px;
+    width: 31%;        /* ~3 per rad med gap */
+  }
+  section.flex-grow article.grow-1{
+    flex-grow: 2;
+  }
+  
+  /*
+    Utility-klasser for vekst
+    HVA: Små hjelpeklasser som endrer flex-grow.
+    HVORDAN: Påfør på valgte kort/containere.
+    HVORFOR: Gir kontroll på plassdistribusjon uten nye spesifikke regler.
+  */
+  .grow-1{ flex-grow: 2; }
+  .grow-2{ flex-grow: 3; }
+  

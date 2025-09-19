@@ -78,13 +78,13 @@
          Hjelper assistive tech å hoppe rett til “content”. Bare én <main> per side. -->
     <main>
       <!-- Seksjon for populære spillkort. -->
-      <section>
+      <section class="flex-container flex-grow">
         <!-- Seksjonsoverskrift for innholdsblokken. -->
         <h2>Populære Spæll</h2>
 
         <!-- <article> brukes for selvstendige innholdsbiter som kan stå alene (kort/produkt).
              Inneholder bilde, tittel, beskrivelse, pris og handling. -->
-        <article>
+        <article id="box1">
           <!-- Produktbilde.
                alt-tekst beskriver produktet for tilgangsverktøy. -->
           <img
@@ -104,7 +104,59 @@
 
         <!-- Gjentatte produktkort med samme struktur.
              Tips: Unike alt-tekster og titler for hvert produkt. -->
+        <article id="box2">
+          <img
+            src="https://picsum.photos/200/300?grayscale"
+            alt="Red Dead Redemption"
+          />
+          <h3>Red dead Redemption</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+          <p>kr 499</p>
+          <a href="product.html" class="btn">Se produkt</a>
+        </article>
+
         <article>
+          <img
+            src="https://picsum.photos/200/300?grayscale"
+            alt="Red Dead Redemption"
+          />
+          <h3>Red dead Redemption</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+          <p>kr 499</p>
+          <a href="product.html" class="btn">Se produkt</a>
+        </article>
+
+        <article>
+          <img
+            src="https://picsum.photos/200/300?grayscale"
+            alt="Red Dead Redemption"
+          />
+          <h3>Red dead Redemption</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+          <p>kr 499</p>
+          <a href="product.html" class="btn">Se produkt</a>
+        </article>
+        <article id="box1">
+          <!-- Produktbilde.
+               alt-tekst beskriver produktet for tilgangsverktøy. -->
+          <img
+            src="https://picsum.photos/200/300?grayscale"
+            alt="Red Dead Redemption"
+          />
+          <!-- <h3> er artikkelens tittel (underordnet <h2>). -->
+          <h3>Red dead Redemption</h3>
+          <!-- Kort beskrivelse. -->
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+          <!-- Pris. Tips: vurder <data value="499">kr 499</data> for maskinlesbar verdi. -->
+          <p>kr 499</p>
+          <!-- Handlingslenke (CTA). href="" betyr “ingen mål-URL ennå”.
+               Tips: når dette blir en knapp som legger i handlekurv via JS, vurder <button>. -->
+          <a href="product.html" class="btn">Se produkt</a>
+        </article>
+
+        <!-- Gjentatte produktkort med samme struktur.
+             Tips: Unike alt-tekster og titler for hvert produkt. -->
+        <article id="box2">
           <img
             src="https://picsum.photos/200/300?grayscale"
             alt="Red Dead Redemption"
@@ -139,12 +191,11 @@
       </section>
 
       <!-- Seksjon for kategorier/lenkesamling til undersider. -->
-      <section>
+      <section class="flex-container flex-grow">
         <h2>Kategorier</h2>
-
         <!-- Hver <article> kan representere en kategoriinngang.
              <h3> inneholder en lenke til kategoriside. -->
-        <article>
+        <article class="grow-1">
           <!-- Lenke til “Action”-kategori. -->
           <h3><a href="action.html">Action</a></h3>
         </article>
@@ -159,7 +210,7 @@
           <h3><a href="rollespill.html">Rollespill</a></h3>
         </article>
 
-        <article>
+        <article class="grow-2">
           <!-- Lenke til “Fantasy”-kategori. -->
           <h3><a href="fantasy.html">Fantasy</a></h3>
         </article>
